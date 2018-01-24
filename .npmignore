@@ -1,0 +1,12 @@
+# Created by .ignore support plugin (hsz.mobi)
+src/*.js
+src/*.js.map
+build/
+.git
+fuse.js
+gulpfile.js
+package-lock.json
+### VisualStudioCode template
+.vscode/
+### JetBrains
+.idea

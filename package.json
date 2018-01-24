@@ -1,0 +1,46 @@
+{
+  "name": "crossword-definition",
+  "version": "0.0.1",
+  "description": "A generator of crossword definitions in Typescript. Based in https://github.com/jweisbeck/Crossword/",
+  "main": "dist/crossword-definition.js",
+  "jsnext:main": "esm2015/index.js",
+  "ts:main": "src/index.ts",
+  "types": "src/index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.com:davinchi/games/jq-crossword.git"
+  },
+  "homepage": "https://gitlab.com/davinchi/games/jq-crossword",
+  "author": "Davinchi",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^9.3.0",
+    "extend": "^3.0.1",
+    "fuse-box": "^3.0.2",
+    "gulp": "^3.9.1",
+    "gulp-clean": "^0.3.2",
+    "gulp-cli": "^1.4.0",
+    "gulp-debug": "^3.1.0",
+    "gulp-filter": "^5.0.1",
+    "gulp-header-comment": "^0.2.1",
+    "gulp-if": "^2.0.2",
+    "gulp-rename": "^1.2.2",
+    "gulp-sourcemaps": "^2.6.1",
+    "gulp-sync": "^0.1.4",
+    "gulp-typescript": "^3.2.3",
+    "gulp-uglify": "^3.0.0",
+    "gulp-uglify-es": "^1.0.0",
+    "gulp-util": "^3.0.8",
+    "merge2": "^1.2.1",
+    "require-dir": "^0.3.2",
+    "typescript": "^2.6.2",
+    "uglify-js": "^3.3.8"
+  },
+  "dependencies": {
+    "jquery": "^3.3.1",
+    "jquery-ui": "^1.12.1"
+  }
+}

@@ -1,0 +1,7 @@
+# Created by .ignore support plugin (hsz.mobi)
+src/*.js
+src/*.js.map
+### VisualStudioCode template
+.vscode/
+### JetBrains
+.idea
