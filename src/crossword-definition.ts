@@ -170,13 +170,13 @@ export class CrosswordDefinition{
             //  Create a model for the clue.
             let clueModel = new CrosswordClueDefinition({
                 number: clueDefinition.number,
-                code: clueDefinition.number + (across ? "a" : "d"),
                 answer: clueDefinition.answer,
                 x: clueDefinition.x - 1,    //  Definitions are 1 based, models are more useful 0 based.
                 y: clueDefinition.y - 1,
                 across: across,
                 clue: clueDefinition.clue,
-                cells: []
+                cells: [],
+                hints:clueDefinition.hints
             });
             this[across ? 'acrossClues' : 'downClues'].push(clueModel);
 
@@ -214,7 +214,10 @@ export class CrosswordDefinition{
                 cell[across ? 'acrossClue' : 'downClue'] = clueModel;
                 cell[across ? 'acrossClueLetterIndex' : 'downClueLetterIndex'] = letter;
                 clueModel.cells.push(cell);
-
+                //letter starts with 0, hints positions starts from 1,
+                if(clueModel.hints.length > 0 && (clueModel.hints.indexOf(letter+1) != -1)){
+                    cell.hint = true;
+                }
                 //  If the clue has an answer we set it in the cell...
                 if(clueModel.answer) {
 

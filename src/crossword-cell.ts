@@ -50,6 +50,11 @@ export class CrosswordCell{
      * The index of the letter in the cell for the down clue
      */
     downClueLetterIndex?:number;
+    /**
+     * The cell is a hint
+     * @type {boolean}
+     */
+    hint?:boolean=false;
     constructor(params:CrosswordCell){
         if(params.x != undefined){
             this.x = params.x;
@@ -77,6 +82,9 @@ export class CrosswordCell{
         }
         if(params.acrossClueLetterIndex != undefined){
             this.acrossClueLetterIndex = params.acrossClueLetterIndex;
+        }
+        if(params.hint != undefined){
+            this.hint = params.hint;
         }
     }
 }

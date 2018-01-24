@@ -41,6 +41,10 @@ export class CrosswordClueDefinition{
      * Cells for which the clue pass through
      */
     cells:CrosswordCell[]=[];
+    /**
+     * Set one or more letters of the answer as hints.
+     */
+    hints?:number[]=[];
     constructor(params:CrosswordClueDefinition){
         if(params.number != undefined){
             this.number = params.number;
@@ -62,6 +66,9 @@ export class CrosswordClueDefinition{
         }
         if(params.cells != undefined){
             this.cells = params.cells;
+        }
+        if(params.hints != undefined){
+            this.hints = params.hints;
         }
         this.code = this.number+(this.across ? "a":"d");
     }
