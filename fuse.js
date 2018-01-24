@@ -11,16 +11,17 @@ Sparky.context(class {
         this.fuse= FuseBox.init({
             homeDir: "src",
             output: "dist/$name.js",
-            target: "browser@es5",
+            target: "browser@es6",
             cache:false,
             sourceMaps:!this.isProduction,
             globals: { 'default': '*' },
             plugins: [
-                QuantumPlugin({
+                this.isProduction && QuantumPlugin({
                     containedAPI: true,
                     ensureES5: true,
                     uglify: this.isProduction,
-                    bakeApiIntoBundle: "crossword-definition"
+                    bakeApiIntoBundle: "crossword-definition",
+                    noConflictApi:true
                 })
             ]
         });
