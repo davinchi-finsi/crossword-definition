@@ -1,1 +1,225 @@
-!function(){var e={f:{},m:{},r:function(s){var t=e.m[s];if(t)return t.m.exports;var i=e.f[s];return i?((t=e.m[s]={}).exports={},t.m={exports:t.exports},i(t.m,t.exports),t.m.exports):void 0}};e.f[0]=function(s,t){function i(e){for(var s in e)t.hasOwnProperty(s)||(t[s]=e[s])}Object.defineProperty(t,"__esModule",{value:!0}),i(e.r(1)),i(e.r(2)),i(e.r(3))},e.f[1]=function(e,s){Object.defineProperty(s,"__esModule",{value:!0});s.CrosswordCell=class{constructor(e){this.light=!1,this.hint=!1,void 0!=e.x&&(this.x=e.x),void 0!=e.y&&(this.y=e.y),void 0!=e.crossword&&(this.crossword=e.crossword),void 0!=e.light&&(this.light=e.light),void 0!=e.answer&&(this.answer=e.answer),void 0!=e.clueLabel&&(this.clueLabel=e.clueLabel),void 0!=e.acrossClue&&(this.acrossClue=e.acrossClue),void 0!=e.downClue&&(this.downClue=e.downClue),void 0!=e.acrossClueLetterIndex&&(this.acrossClueLetterIndex=e.acrossClueLetterIndex),void 0!=e.hint&&(this.hint=e.hint)}}},e.f[2]=function(e,s){Object.defineProperty(s,"__esModule",{value:!0});s.CrosswordClueDefinition=class{constructor(e){this.across=!1,this.cells=[],this.hints=[],void 0!=e.number&&(this.number=e.number),void 0!=e.answer&&(this.answer=e.answer),void 0!=e.x&&(this.x=e.x),void 0!=e.y&&(this.y=e.y),void 0!=e.across&&(this.across=e.across),void 0!=e.clue&&(this.clue=e.clue),void 0!=e.cells&&(this.cells=e.cells),void 0!=e.hints&&(this.hints=e.hints),this.code=this.number+(this.across?"a":"d")}}},e.f[3]=function(s,t){Object.defineProperty(t,"__esModule",{value:!0});const i=e.r(2),r=e.r(1);t.CrosswordDefinition=class{constructor(e){if(this.acrossClues=[],this.downClues=[],this.width=e.width,this.height=e.height,this.matrix=this.buildMatrix(),void 0===this.width||null===this.width||this.width<0||void 0===this.height||null===this.height||this.height<0)throw new Error("[CrosswordDefinition] The crossword bounds are invalid.");let s=e.acrossClues.concat(e.downClues);for(let t=0;t<s.length;t++){let r=s[t],o=t<e.acrossClues.length,n=new i.CrosswordClueDefinition({number:r.number,answer:r.answer,x:r.x-1,y:r.y-1,across:o,clue:r.clue,cells:[],hints:r.hints});if(this[o?"acrossClues":"downClues"].push(n),n.x<0||n.x>=this.width||n.y<0||n.y>=this.height)throw new Error(`[CrosswordDefinition] Clue ${n.code} doesn't start in the bounds.`);if(o){if(n.x+n.answer.length>this.width)throw new Error(`[CrosswordDefinition] Clue at (${n.x},${n.y}) '${n.answer}' exceeds horizontal bounds, width of ${this.width}.`)}else if(n.y+n.answer.length>this.height)throw new Error(`[CrosswordDefinition] Clue at (${n.x},${n.y}) '${n.answer}' exceeds vertical bounds, height of ${this.height}.`);let h=n.x,l=n.y;for(let e=0;e<n.answer.length;e++){let s=this.matrix[l][h];if(s.light=!0,s[o?"acrossClue":"downClue"]=n,s[o?"acrossClueLetterIndex":"downClueLetterIndex"]=e,n.cells.push(s),n.hints.length>0&&-1!=n.hints.indexOf(e+1)&&(s.hint=!0),n.answer){if(void 0!==s.answer&&" "!==s.answer&&s.answer!==n.answer[e]){let e=s.acrossClue.answer.split(""),t=s.acrossClueLetterIndex,i=s.downClue.answer.split(""),r=s.downClueLetterIndex;throw e.splice(t,0,"["),e.splice(t+2,0,"]"),e=e.join(""),i.splice(r,0,"["),i.splice(r+2,0,"]"),i=i.join(""),new Error(`[CrosswordDefinition] Clue ${n.code} answer at (${h+1}, ${l+1}) is not coherent with previous clue (${s.acrossClue.code}) answer. ${e} doesn't match with ${i}`)}s.answer=n.answer[e]}if(0===e){if(s.clueLabel&&s.clueLabel!==n.number)throw new Error(`[CrosswordDefinition] Clue at (${h+1}, ${l+1}) '${n.answer}' has a label which is inconsistent with another clue (${s.acrossClue.code}).`);s.clueLabel=n.number}o?h++:l++}}}buildMatrix(){let e=this.width,s=this.height,t=[];for(let i=0;i<s;i++){let s=[];for(let t=0;t<e;t++)s[t]=new r.CrosswordCell({crossword:this,x:t,y:i});t[i]=s}return t}toString(){let e="",s=this.matrix;for(let t=0,i=s.length;t<i;t++){let i=s[t];e+="\n";for(let s=0,t=i.length;s<t;s++)e+=i[s].answer||" "}return e}}};var s=e.r(0);if(s)for(var t in s)window[t]=s[t]}();
+(function(){
+    var _c425 = {};
+    _c425.f = {}
+    // cached modules
+    _c425.m = {};
+    _c425.r = function(id) {
+        var cached = _c425.m[id];
+        // resolve if in cache
+        if (cached) {
+            return cached.m.exports;
+        }
+        var file = _c425.f[id];
+        if (!file)
+            return;
+        cached = _c425.m[id] = {};
+        cached.exports = {};
+        cached.m = { exports: cached.exports };
+        file(cached.m, cached.exports);
+        return cached.m.exports;
+    };
+// default/index.js
+_c425.f[0] = function(module,exports){
+function __export(m) {
+    for (var p in m)
+        if (!exports.hasOwnProperty(p))
+            exports[p] = m[p];
+}
+Object.defineProperty(exports, '__esModule', { value: true });
+__export(_c425.r(1));
+__export(_c425.r(2));
+__export(_c425.r(3));
+}
+// default/crossword-cell.js
+_c425.f[1] = function(module,exports){
+Object.defineProperty(exports, '__esModule', { value: true });
+class CrosswordCell {
+    constructor(params) {
+        this.light = false;
+        this.hint = false;
+        if (params.x != undefined) {
+            this.x = params.x;
+        }
+        if (params.y != undefined) {
+            this.y = params.y;
+        }
+        if (params.crossword != undefined) {
+            this.crossword = params.crossword;
+        }
+        if (params.light != undefined) {
+            this.light = params.light;
+        }
+        if (params.answer != undefined) {
+            this.answer = params.answer;
+        }
+        if (params.clueLabel != undefined) {
+            this.clueLabel = params.clueLabel;
+        }
+        if (params.acrossClue != undefined) {
+            this.acrossClue = params.acrossClue;
+        }
+        if (params.downClue != undefined) {
+            this.downClue = params.downClue;
+        }
+        if (params.acrossClueLetterIndex != undefined) {
+            this.acrossClueLetterIndex = params.acrossClueLetterIndex;
+        }
+        if (params.hint != undefined) {
+            this.hint = params.hint;
+        }
+    }
+}
+exports.CrosswordCell = CrosswordCell;
+}
+// default/crossword-clue-definition.js
+_c425.f[2] = function(module,exports){
+Object.defineProperty(exports, '__esModule', { value: true });
+class CrosswordClueDefinition {
+    constructor(params) {
+        this.across = false;
+        this.cells = [];
+        this.hints = [];
+        if (params.number != undefined) {
+            this.number = params.number;
+        }
+        if (params.answer != undefined) {
+            this.answer = params.answer;
+        }
+        if (params.x != undefined) {
+            this.x = params.x;
+        }
+        if (params.y != undefined) {
+            this.y = params.y;
+        }
+        if (params.across != undefined) {
+            this.across = params.across;
+        }
+        if (params.clue != undefined) {
+            this.clue = params.clue;
+        }
+        if (params.cells != undefined) {
+            this.cells = params.cells;
+        }
+        if (params.hints != undefined) {
+            this.hints = params.hints;
+        }
+        this.code = this.number + (this.across ? 'a' : 'd');
+    }
+}
+exports.CrosswordClueDefinition = CrosswordClueDefinition;
+}
+// default/crossword-definition.js
+_c425.f[3] = function(module,exports){
+Object.defineProperty(exports, '__esModule', { value: true });
+const crossword_clue_definition_1 = _c425.r(2);
+const crossword_cell_1 = _c425.r(1);
+class CrosswordDefinition {
+    constructor(crosswordDefinition) {
+        this.acrossClues = [];
+        this.downClues = [];
+        this.width = crosswordDefinition.width;
+        this.height = crosswordDefinition.height;
+        this.matrix = this.buildMatrix();
+        if (this.width === undefined || this.width === null || this.width < 0 || this.height === undefined || this.height === null || this.height < 0) {
+            throw new Error('[CrosswordDefinition] The crossword bounds are invalid.');
+        }
+        let clueDefinitions = crosswordDefinition.acrossClues.concat(crosswordDefinition.downClues);
+        for (let definitionIndex = 0; definitionIndex < clueDefinitions.length; definitionIndex++) {
+            let clueDefinition = clueDefinitions[definitionIndex];
+            let across = definitionIndex < crosswordDefinition.acrossClues.length;
+            let clueModel = new crossword_clue_definition_1.CrosswordClueDefinition({
+                number: clueDefinition.number,
+                answer: clueDefinition.answer,
+                x: clueDefinition.x - 1,
+                y: clueDefinition.y - 1,
+                across: across,
+                clue: clueDefinition.clue,
+                cells: [],
+                hints: clueDefinition.hints
+            });
+            this[across ? 'acrossClues' : 'downClues'].push(clueModel);
+            if (clueModel.x < 0 || clueModel.x >= this.width || clueModel.y < 0 || clueModel.y >= this.height) {
+                throw new Error(`[CrosswordDefinition] Clue ${ clueModel.code } doesn't start in the bounds.`);
+            }
+            if (across) {
+                if (clueModel.x + clueModel.answer.length > this.width) {
+                    throw new Error(`[CrosswordDefinition] Clue at (${ clueModel.x },${ clueModel.y }) '${ clueModel.answer }' exceeds horizontal bounds, width of ${ this.width }.`);
+                }
+            } else {
+                if (clueModel.y + clueModel.answer.length > this.height) {
+                    throw new Error(`[CrosswordDefinition] Clue at (${ clueModel.x },${ clueModel.y }) '${ clueModel.answer }' exceeds vertical bounds, height of ${ this.height }.`);
+                }
+            }
+            let x = clueModel.x;
+            let y = clueModel.y;
+            for (let letter = 0; letter < clueModel.answer.length; letter++) {
+                let cell = this.matrix[y][x];
+                cell.light = true;
+                cell[across ? 'acrossClue' : 'downClue'] = clueModel;
+                cell[across ? 'acrossClueLetterIndex' : 'downClueLetterIndex'] = letter;
+                clueModel.cells.push(cell);
+                if (clueModel.hints.length > 0 && clueModel.hints.indexOf(letter + 1) != -1) {
+                    cell.hint = true;
+                }
+                if (clueModel.answer) {
+                    if (cell.answer !== undefined && cell.answer !== ' ' && cell.answer !== clueModel.answer[letter]) {
+                        let cellWord = cell.acrossClue.answer.split(''), cellWordLetterIndex = cell.acrossClueLetterIndex, clueWord = cell.downClue.answer.split(''), clueWordLetterIndex = cell.downClueLetterIndex;
+                        cellWord.splice(cellWordLetterIndex, 0, '[');
+                        cellWord.splice(cellWordLetterIndex + 2, 0, ']');
+                        cellWord = cellWord.join('');
+                        clueWord.splice(clueWordLetterIndex, 0, '[');
+                        clueWord.splice(clueWordLetterIndex + 2, 0, ']');
+                        clueWord = clueWord.join('');
+                        throw new Error(`[CrosswordDefinition] Clue ${ clueModel.code } answer at (${ x + 1 }, ${ y + 1 }) is not coherent with previous clue (${ cell.acrossClue.code }) answer. ${ cellWord } doesn't match with ${ clueWord }`);
+                    }
+                    cell.answer = clueModel.answer[letter];
+                }
+                if (letter === 0) {
+                    if (cell.clueLabel && cell.clueLabel !== clueModel.number) {
+                        throw new Error(`[CrosswordDefinition] Clue at (${ x + 1 }, ${ y + 1 }) '${ clueModel.answer }' has a label which is inconsistent with another clue (${ cell.acrossClue.code }).`);
+                    }
+                    cell.clueLabel = clueModel.number;
+                }
+                if (across) {
+                    x++;
+                } else {
+                    y++;
+                }
+            }
+        }
+    }
+    buildMatrix() {
+        let x = this.width;
+        let y = this.height;
+        let array = [];
+        for (let rowIndex = 0; rowIndex < y; rowIndex++) {
+            let row = [];
+            for (let colIndex = 0; colIndex < x; colIndex++) {
+                row[colIndex] = new crossword_cell_1.CrosswordCell({
+                    crossword: this,
+                    x: colIndex,
+                    y: rowIndex
+                });
+            }
+            array[rowIndex] = row;
+        }
+        return array;
+    }
+    toString() {
+        let result = '', matrix = this.matrix;
+        for (let rowIndex = 0, matrixLength = matrix.length; rowIndex < matrixLength; rowIndex++) {
+            let row = matrix[rowIndex];
+            result += '\n';
+            for (let colIndex = 0, colsLength = row.length; colIndex < colsLength; colIndex++) {
+                let col = row[colIndex];
+                result += col.answer || ' ';
+            }
+        }
+        return result;
+    }
+}
+exports.CrosswordDefinition = CrosswordDefinition;
+}
+var r = _c425.r(0)
+if (r){for(var i in r){ window[i] = r[i] }}
+})();
