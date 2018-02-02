@@ -5,6 +5,31 @@ import {CrosswordClueDefinition} from "./crossword-clue-definition";
 import {CrosswordCell} from "./crossword-cell";
 
 /**
+ * Available options for Crossword Definition
+ */
+export interface CrosswordDefinitionOptions{
+    /**
+     * Total width of the board
+     */
+    width:number;
+    /**
+     * Total height of the board
+     */
+    height:number;
+    /**
+     * Across clues
+     */
+    acrossClues:CrosswordClueDefinition[];
+    /**
+     * Down clues
+     */
+    downClues:CrosswordClueDefinition[];
+    /**
+     * Matrix with all the cells
+     */
+    matrix?:CrosswordCell[][];
+}
+/**
  *  Crossword definition.
  *  Creates a model for a crossword game
  *  Based on https://github.com/jweisbeck/Crossword
@@ -125,7 +150,7 @@ import {CrosswordCell} from "./crossword-cell";
  *  });
  *  ```
  */
-export class CrosswordDefinition{
+export class CrosswordDefinition implements CrosswordDefinitionOptions{
     /**
      * Total width of the board
      */
