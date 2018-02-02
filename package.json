@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "A generator of crossword definitions in Typescript. Based in https://github.com/jweisbeck/Crossword/",
   "main": "dist/crossword-definition.js",
-  "jsnext:main": "esm2015/index.js",
+  "jsnext:main": "esm2015/crossword-definition.js",
   "ts:main": "src/index.ts",
   "types": "src/index.ts",
   "scripts": {
@@ -21,6 +21,7 @@
     "extend": "^3.0.1",
     "fuse-box": "^3.0.2",
     "typescript": "^2.6.2",
+    "uglify-es": "^3.3.9",
     "uglify-js": "^3.3.8"
   },
   "dependencies": {
