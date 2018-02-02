@@ -30,7 +30,7 @@ Sparky.context(class {
         if (!this.isProduction) {
             app.watch();
         }
-        app.instructions(">index.ts");
+        app.instructions(">[index.ts]");
         return app;
     }
     createES6Bundle(fuse) {
@@ -38,14 +38,14 @@ Sparky.context(class {
         if (!this.isProduction) {
             app.watch();
         }
-        app.instructions(">index.ts");
+        app.instructions(">[index.ts]");
         return app;
     }
 });
 
-Sparky.task("clean", () => {
-    Sparky.src("dist").clean("dist").exec();
-    Sparky.src("esm2015").clean("esm2015").exec();
+Sparky.task("clean", async () => {
+    await Sparky.src("dist").clean("dist").exec();
+    await Sparky.src("esm2015").clean("esm2015").exec();
 });
 
 Sparky.task("default", ["clean"], context => {
