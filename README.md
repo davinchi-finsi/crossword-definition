@@ -2,6 +2,8 @@
 Lightweight and fast crossword definition generator, crossword-definition is a component that provides a easy way to generate the data model
 of a crossword game board.
 
+Based on [@dwmkerr crossword-js](https://github.com/dwmkerr/crosswords-js). Thanks!
+
 ## Features
 - es2015 and UMD bundles (es5)
 - Typescript sources
@@ -22,7 +24,7 @@ If you are looking for an UI component, please go to [jq-crossword] a jquery com
 or download the [latest release](https://github.com/davinchi-finsi/crossword-definition/releases)
 
 ## Doc
-For more info, please check the [doc](./docs/index.html)
+For more info, please check the [docs](https://davinchi-finsi.github.io/crossword-definition/)
 
 ## Usage
 ### NodeJS or Bundlers (Webpack, Fusebox, Rollup, etc)
@@ -139,6 +141,6 @@ As you can see, the definition object has the matrix with all the cells. Each ce
 Also you could access the clues definition by `acrossClues` and `downClues`. Each clue has the cells that conform it
 
 For more info about the properties, please check:
-- [CrosswordDefinition doc](./docs/classes/crossworddefinition.crossworddefinition-1.html)
-- [CrosswordClueDefinition doc](./docs/classes/crossworddefinition.crosswordcluedefinition)
-- [CrosswordCell](./docs/classes/crossworddefinition.crossworddefinition-1)
+- [CrosswordDefinition doc](https://davinchi-finsi.github.io/crossword-definition/classes/crossworddefinition.crossworddefinition-1.html)
+- [CrosswordClueDefinition doc](https://davinchi-finsi.github.io/crossword-definition/classes/crossworddefinition.crosswordcluedefinition.html)
+- [CrosswordCell](https://davinchi-finsi.github.io/crossword-definition/classes/crossworddefinition.crosswordcell.html)
