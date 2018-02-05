@@ -4,9 +4,43 @@
 import {CrosswordCell} from "./crossword-cell";
 
 /**
+ * Available options for CrosswordClueDefinition
+ */
+export interface CrosswordClueDefinitionOptions{
+    /**
+     * Number of the clue.
+     * Will be used to establish the order of the clues
+     */
+    number:number;
+    /**
+     * Word to answer
+     */
+    answer:string;
+    /**
+     * The start position in X axis
+     */
+    x:number;
+    /**
+     * The start position in Y axis
+     */
+    y:number;
+    /**
+     * The clue is across or down
+     */
+    across:boolean;
+    /**
+     * The clue to
+     */
+    clue:string;
+    /**
+     * Set one or more letters of the answer as hints.
+     */
+    hints?:number[];
+}
+/**
  * Definition for a clue. Could be down or across
  */
-export class CrosswordClueDefinition{
+export class CrosswordClueDefinition implements CrosswordClueDefinitionOptions{
     /**
      * Number of the clue.
      * Will be used to establish the order of the clues
@@ -45,7 +79,7 @@ export class CrosswordClueDefinition{
      * Set one or more letters of the answer as hints.
      */
     hints?:number[]=[];
-    constructor(params:CrosswordClueDefinition){
+    constructor(params:CrosswordClueDefinitionOptions){
         if(params.number != undefined){
             this.number = params.number;
         }
@@ -63,9 +97,6 @@ export class CrosswordClueDefinition{
         }
         if(params.clue != undefined){
             this.clue = params.clue;
-        }
-        if(params.cells != undefined){
-            this.cells = params.cells;
         }
         if(params.hints != undefined){
             this.hints = params.hints;

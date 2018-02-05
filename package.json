@@ -9,7 +9,8 @@
   "typings": "src/index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "rimraf dist && rimraf esm2015 && rollup -c"
+    "build": "rimraf dist && rimraf esm2015 && rollup -c",
+    "doc": "rimraf doc & typedoc --mode modules --ignoreCompilerErrors --readme none --exclude **/index.ts --out doc ./src"
   },
   "repository": {
     "type": "git",
@@ -20,6 +21,7 @@
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^9.3.0",
+    "concurrently": "^3.5.1",
     "lodash.camelcase": "^4.3.0",
     "rimraf": "^2.6.2",
     "rollup": "^0.55.3",
@@ -28,6 +30,8 @@
     "rollup-plugin-typescript2": "^0.11.0",
     "rollup-plugin-uglify": "^3.0.0",
     "rollup-plugin-uglify-es": "0.0.1",
+    "typedoc": "^0.10.0",
+    "typedoc-plugin-external-module-name": "^1.0.10",
     "typescript": "^2.6.2",
     "uglify-js": "^3.3.8"
   },

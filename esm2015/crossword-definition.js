@@ -51,6 +51,9 @@ class CrosswordCell {
         if (params.acrossClueLetterIndex != undefined) {
             this.acrossClueLetterIndex = params.acrossClueLetterIndex;
         }
+        if (params.downClueLetterIndex != undefined) {
+            this.downClueLetterIndex = params.downClueLetterIndex;
+        }
         if (params.hint != undefined) {
             this.hint = params.hint;
         }
@@ -91,9 +94,6 @@ class CrosswordClueDefinition {
         }
         if (params.clue != undefined) {
             this.clue = params.clue;
-        }
-        if (params.cells != undefined) {
-            this.cells = params.cells;
         }
         if (params.hints != undefined) {
             this.hints = params.hints;
@@ -256,7 +256,6 @@ class CrosswordDefinition {
                 y: clueDefinition.y - 1,
                 across: across,
                 clue: clueDefinition.clue,
-                cells: [],
                 hints: clueDefinition.hints
             });
             this[across ? 'acrossClues' : 'downClues'].push(clueModel);
@@ -281,9 +280,6 @@ class CrosswordDefinition {
                     throw new Error(`[CrosswordDefinition] Clue at (${clueModel.x},${clueModel.y}) '${clueModel.answer}' exceeds vertical bounds, height of ${this.height}.`);
                 }
             }
-            //  We can now mark the cells as light. If the clue has
-            //  an answer (which is optional), we can validate it
-            //  is coherent.
             let x = clueModel.x;
             let y = clueModel.y;
             for (let letter = 0; letter < clueModel.answer.length; letter++) {
@@ -313,7 +309,8 @@ class CrosswordDefinition {
                 }
                 if (letter === 0) {
                     if (cell.clueLabel && cell.clueLabel !== clueModel.number) {
-                        throw new Error(`[CrosswordDefinition] Clue at (${x + 1}, ${y + 1}) '${clueModel.answer}' has a label which is inconsistent with another clue (${cell.acrossClue.code}).`);
+                        const prevClue = cell.acrossClue || cell.downClue;
+                        throw new Error(`[CrosswordDefinition] Clue '${clueModel.code}' ('${clueModel.answer}') with number '${clueModel.number}' at (${x + 1}, ${y + 1}) has a label which is inconsistent with another clue '${cell.acrossClue.code}' (${prevClue.number}) with number'${prevClue.answer}'. If two clues starts in the same cell, the 'number' option must be the same. In this case, ${prevClue.number}`);
                     }
                     cell.clueLabel = clueModel.number;
                 }
