@@ -10,7 +10,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "rimraf dist && rimraf esm2015 && rollup -c",
-    "doc": "rimraf doc & typedoc --mode modules --ignoreCompilerErrors --readme none --exclude **/index.ts --out doc ./src"
+    "doc": "rimraf docs & typedoc --mode modules --ignoreCompilerErrors --readme none --exclude **/index.ts --out docs ./src"
   },
   "repository": {
     "type": "git",

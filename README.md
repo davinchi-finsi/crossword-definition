@@ -22,7 +22,7 @@ If you are looking for an UI component, please go to [jq-crossword] a jquery com
 or download the [latest release](https://github.com/davinchi-finsi/crossword-definition/releases)
 
 ## Doc
-For more info, please check the [doc](./doc/index.html)
+For more info, please check the [doc](./docs/index.html)
 
 ## Usage
 ### NodeJS or Bundlers (Webpack, Fusebox, Rollup, etc)
@@ -139,6 +139,6 @@ As you can see, the definition object has the matrix with all the cells. Each ce
 Also you could access the clues definition by `acrossClues` and `downClues`. Each clue has the cells that conform it
 
 For more info about the properties, please check:
-- [CrosswordDefinition doc](./doc/classes/crossworddefinition.crossworddefinition-1.html)
-- [CrosswordClueDefinition doc](./doc/classes/crossworddefinition.crosswordcluedefinition)
-- [CrosswordCell](./doc/classes/crossworddefinition.crossworddefinition-1)
+- [CrosswordDefinition doc](./docs/classes/crossworddefinition.crossworddefinition-1.html)
+- [CrosswordClueDefinition doc](./docs/classes/crossworddefinition.crosswordcluedefinition)
+- [CrosswordCell](./docs/classes/crossworddefinition.crossworddefinition-1)
