@@ -1,6 +1,6 @@
 {
   "name": "crossword-definition",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "A generator of crossword definitions in Typescript. Based in https://github.com/jweisbeck/Crossword/",
   "main": "dist/crossword-definition.js",
   "jsnext:main": "esm2015/crossword-definition.js",
