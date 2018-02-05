@@ -19,7 +19,9 @@ export default [
             format: 'umd'
         },
         plugins: [
-            typescript(),
+            typescript({
+                typescript:require("typescript"),
+            }),
             license({
                 banner:banner
             })
@@ -34,7 +36,9 @@ export default [
             format: 'umd'
         },
         plugins: [
-            typescript(),
+            typescript({
+                typescript:require("typescript"),
+            }),
             uglify(),
             license({
                 banner:banner
@@ -51,6 +55,7 @@ export default [
         },
         plugins: [
             typescript({
+                typescript:require("typescript"),
                 target:"es2015"
             }),
             license({
@@ -68,6 +73,7 @@ export default [
         },
         plugins: [
             typescript({
+                typescript:require("typescript"),
                 target:"es2015"
             }),
             uglifyEs(),

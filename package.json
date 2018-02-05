@@ -14,11 +14,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@gitlab.com:davinchi/games/crossword-definition.git"
+    "url": "git@https://github.com/haztivity/crossword-definition.git"
   },
-  "homepage": "https://gitlab.com/davinchi/games/crossword-definition",
+  "homepage": "https://github.com/haztivity/crossword-definition",
   "author": "Davinchi",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "@types/node": "^9.3.0",
     "concurrently": "^3.5.1",
