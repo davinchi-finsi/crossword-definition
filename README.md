@@ -67,7 +67,7 @@ let crosswordOptions:CrosswordDefinitionOptions = {
     ...options
 }
 ```
-
+**Please note** that the `x` and `y` positions starts from 1 instead of 0, the first cell is in the `x:0` and `y:0`
 ```javascript
 /*
 *To create
@@ -125,10 +125,6 @@ console.log(definition.toString();
 ### How it works
 `CrosswordDefinition` loop over all the definitions and creates a matrix (the board) with all the cells.
 
-Para cada pista se recorren las letras y se comprueba la coherencia y los límites.
-
-Si la letra de la pista es correcta se añade a la celda correspondiente con la información relativa.
-
 For each clue the letters are checked, the letters must be coherent and must be inside de bounds.
 
 If all is correct, the data is attached to the corresponding cell.
@@ -144,3 +140,140 @@ For more info about the properties, please check:
 - [CrosswordDefinition doc](https://davinchi-finsi.github.io/crossword-definition/classes/crossworddefinition.crossworddefinition-1.html)
 - [CrosswordClueDefinition doc](https://davinchi-finsi.github.io/crossword-definition/classes/crossworddefinition.crosswordcluedefinition.html)
 - [CrosswordCell](https://davinchi-finsi.github.io/crossword-definition/classes/crossworddefinition.crosswordcell.html)
+
+
+## Cell checking
+### Bounds
+`CrosswordDefinition` checks that all the clues starts and ends inside the bounds of the board.
+If some clue is out of bounds, an error will be thrown
+The `height` must match with the longest word in down clues + the `y` position where starts.
+The `width` must match with the longest word in across clues + the `x` position where starts.
+
+**Please note** that the `x` and `y` positions starts from 1 instead of 0, the first cell is in the `x:0` and `y:0`
+For example, the height specified must be 5 ("World" length is 5 and starts in the first cell)
+```typescript
+let definition = new CrosswordDefinition({
+    width:5,
+    height:4,//wrong height
+    acrossClues:[
+        {
+            number:1,
+            answer:"Hello",
+            x:1,
+            y:2,
+            clue:"A common greeting"
+        }
+    ],
+    downClues:[
+        {
+            number:2,
+            answer:"World",
+            x:5,
+            y:1,
+            clue:"The earth, together with all of its countries and peoples"
+        }
+    ]
+});
+```
+This error will be thrown:
+```
+[CrosswordDefinition] Clue at (5,1) 'World' exceeds vertical bounds, height of 4.
+```
+In this example, "World" starts in the second cell, so the `height` must be 6, 5+1
+```typescript
+let definition = new CrosswordDefinition({
+    width:5,
+    height:4,//wrong height
+    acrossClues:[
+        {
+            number:1,
+            answer:"Hello",
+            x:1,
+            y:3,
+            clue:"A common greeting"
+        }
+    ],
+    downClues:[
+        {
+            number:2,
+            answer:"World",
+            x:5,
+            y:2,//starts in the second cell
+            clue:"The earth, together with all of its countries and peoples"
+        }
+    ]
+});
+```
+### Coherency
+`CrosswordDefinition` do two checks:
+#### Same letter for the same cell
+If two clues shares cell, the letter from both clues must be the same.
+This example will throw error, the position of "World" doesn't match with the acrossClue
+This is the given coordinates:
+```
+            W
+H   e   l   l   o
+            r
+            l
+            d
+```
+ The 'o' from 'World' doesn't match with the 'o' from 'Hello'
+ ```typescript
+ let definition = new CrosswordDefinition({
+     width:5,
+     height:5,
+     acrossClues:[
+         {
+             number:1,
+             answer:"Hello",
+             x:1,
+             y:2,
+             clue:"A common greeting"
+         }
+     ],
+     downClues:[
+         {
+             number:2,
+             answer:"World",
+             x:4,//wrong x, must be 5
+             y:1,
+             clue:"The earth, together with all of its countries and peoples"
+         }
+     ]
+ });
+ ```
+ This error will be thrown:
+ ```
+ [CrosswordDefinition] Clue 2d answer at (4, 2) is not coherent with previous clue (1a) answer. Hel[l]o doesn't match with W[o]rld
+ ```
+
+#### Same number in first letter cells
+If two clues shares a cell and for the both of them the cell has the first letter, the number of the clue must be the same:
+```typescript
+let definition = new CrosswordDefinition({
+  width:5,
+  height:5,
+  acrossClues:[
+      {
+          number:1,
+          answer:"Hello",
+          x:1,
+          y:1,
+          clue:"A common greeting"
+      }
+  ],
+  downClues:[
+      {
+          number:2,//wrong, must be 1
+          answer:"History",
+          x:1,
+          y:1,
+          clue:"The study of past events, particularly in human affairs."
+      }
+  ]
+});
+```
+This error will be thrown:
+```
+ [CrosswordDefinition] Clue '4d' ('History') with number '4' at (1, 2) has a label which is inconsistent with another clue '1a' (1) with number'Hello'. If two clues starts in the same cell, the 'number' option must be the same. In this case, 1
+```

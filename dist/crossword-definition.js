@@ -110,8 +110,7 @@ var CrosswordClueDefinition = (function () {
  *  Based on https://github.com/jweisbeck/Crossword
  *  The definition verifies the words and the bounds, ensuring the clues are coherent
  *  The instance of the class is a valid model with all the cells of the board
- *  @example
- *  ```typescript
+ *  @example```typescript
  *  let definition = new CrosswordDefinition({
  *      width:5,
  *      height:5,
@@ -135,8 +134,7 @@ var CrosswordClueDefinition = (function () {
  *      ]
  *  });
  *  ```
- *  @example
- *  This example will throw error because the height specified must be 5 ("World" length in this case)
+ *  @example This example will throw error because the height specified must be 5 ("World" length in this case)
  *  ```typescript
  *  let definition = new CrosswordDefinition({
  *      width:5,
@@ -161,8 +159,7 @@ var CrosswordClueDefinition = (function () {
  *      ]
  *  });
  *  ```
- *  @example
- *  This example will throw error, the position of "World" doesn't match with the acrossClue
+ *  @example This example will throw error, the position of "World" doesn't match with the acrossClue
  *  This is the given coordinates:
  *  ```
  *     W
@@ -190,34 +187,6 @@ var CrosswordClueDefinition = (function () {
  *              number:2,
  *              answer:"World",
  *              x:4,
- *              y:1,
- *              clue:"The earth, together with all of its countries and peoples"
- *          }
- *      ]
- *  });
- *  ```
- *  ```
- *  @example
- *  This example will also throw error, the case of the letters also must match
- *  The 'O' from 'WORLD' doesn't match in case with 'Hello'
- *  ```typescript
- *  let definition = new CrosswordDefinition({
- *      width:5,
- *      height:6,
- *      acrossClues:[
- *          {
- *              number:1,
- *              answer:"Hello",
- *              x:1,
- *              y:2,
- *              clue:"A common greeting"
- *          }
- *      ],
- *      downClues:[
- *          {
- *              number:2,
- *              answer:"WORLD",
- *              x:5,
  *              y:1,
  *              clue:"The earth, together with all of its countries and peoples"
  *          }
@@ -274,12 +243,12 @@ var CrosswordDefinition = (function () {
             //  Make sure the clue is not too long.
             if (across) {
                 if ((clueModel.x + clueModel.answer.length) > this.width) {
-                    throw new Error("[CrosswordDefinition] Clue at (" + clueModel.x + "," + clueModel.y + ") '" + clueModel.answer + "' exceeds horizontal bounds, width of " + this.width + ".");
+                    throw new Error("[CrosswordDefinition] Clue at (" + (clueModel.x + 1) + "," + (clueModel.y + 1) + ") '" + clueModel.answer + "' exceeds horizontal bounds, width of " + this.width + ".");
                 }
             }
             else {
                 if ((clueModel.y + clueModel.answer.length) > this.height) {
-                    throw new Error("[CrosswordDefinition] Clue at (" + clueModel.x + "," + clueModel.y + ") '" + clueModel.answer + "' exceeds vertical bounds, height of " + this.height + ".");
+                    throw new Error("[CrosswordDefinition] Clue at (" + (clueModel.x + 1) + "," + (clueModel.y + 1) + ") '" + clueModel.answer + "' exceeds vertical bounds, height of " + this.height + ".");
                 }
             }
             var x = clueModel.x;
@@ -297,7 +266,7 @@ var CrosswordDefinition = (function () {
                 //  If the clue has an answer we set it in the cell...
                 if (clueModel.answer) {
                     //  ...but only if it is not different to an existing answer.
-                    if (cell.answer !== undefined && cell.answer !== " " && cell.answer !== clueModel.answer[letter]) {
+                    if (cell.answer !== undefined && cell.answer !== " " && cell.answer.toLowerCase() !== clueModel.answer[letter].toLowerCase()) {
                         var cellWord = cell.acrossClue.answer.split(""), cellWordLetterIndex = cell.acrossClueLetterIndex, clueWord = cell.downClue.answer.split(""), clueWordLetterIndex = cell.downClueLetterIndex;
                         cellWord.splice(cellWordLetterIndex, 0, "[");
                         cellWord.splice(cellWordLetterIndex + 2, 0, "]");
@@ -305,7 +274,7 @@ var CrosswordDefinition = (function () {
                         clueWord.splice(clueWordLetterIndex, 0, "[");
                         clueWord.splice(clueWordLetterIndex + 2, 0, "]");
                         clueWord = clueWord.join("");
-                        throw new Error("[CrosswordDefinition] Clue " + clueModel.code + " answer at (" + (x + 1) + ", " + (y + 1) + ") is not coherent with previous clue (" + cell.acrossClue.code + ") answer. " + cellWord + " doesn't match with " + clueWord);
+                        throw new Error("[CrosswordDefinition] Clue '" + clueModel.code + "' answer at (" + (x + 1) + ", " + (y + 1) + ") is not coherent with previous clue '" + cell.acrossClue.code + "' at (" + (cell.acrossClue.x + 1) + ", " + (cell.acrossClue.y + 1) + ") answer. " + cellWord + " doesn't match with " + clueWord);
                     }
                     cell.answer = clueModel.answer[letter];
                 }
