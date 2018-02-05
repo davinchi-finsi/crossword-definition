@@ -145,8 +145,11 @@ For more info about the properties, please check:
 ## Cell checking
 ### Bounds
 `CrosswordDefinition` checks that all the clues starts and ends inside the bounds of the board.
-If some clue is out of bounds, an error will be thrown
+
+If some clue is out of bounds, an error will be thrown.
+
 The `height` must match with the longest word in down clues + the `y` position where starts.
+
 The `width` must match with the longest word in across clues + the `x` position where starts.
 
 **Please note** that the `x` and `y` positions starts from 1 instead of 0, the first cell is in the `x:0` and `y:0`
@@ -175,10 +178,12 @@ let definition = new CrosswordDefinition({
     ]
 });
 ```
+
 This error will be thrown:
 ```
 [CrosswordDefinition] Clue at (5,1) 'World' exceeds vertical bounds, height of 4.
 ```
+
 In this example, "World" starts in the second cell, so the `height` must be 6, 5+1
 ```typescript
 let definition = new CrosswordDefinition({
@@ -205,11 +210,13 @@ let definition = new CrosswordDefinition({
 });
 ```
 ### Coherency
-`CrosswordDefinition` do two checks:
+`CrosswordDefinition` performs two checks:
 #### Same letter for the same cell
 If two clues shares cell, the letter from both clues must be the same.
+
 This example will throw error, the position of "World" doesn't match with the acrossClue
-This is the given coordinates:
+
+The given coordinates:
 ```
             W
 H   e   l   l   o
@@ -217,8 +224,9 @@ H   e   l   l   o
             l
             d
 ```
- The 'o' from 'World' doesn't match with the 'o' from 'Hello'
- ```typescript
+
+The 'o' from 'World' doesn't match with the 'o' from 'Hello'
+```typescript
  let definition = new CrosswordDefinition({
      width:5,
      height:5,
@@ -242,8 +250,8 @@ H   e   l   l   o
      ]
  });
  ```
- This error will be thrown:
- ```
+This error will be thrown:
+```
  [CrosswordDefinition] Clue 2d answer at (4, 2) is not coherent with previous clue (1a) answer. Hel[l]o doesn't match with W[o]rld
  ```
 
@@ -273,6 +281,7 @@ let definition = new CrosswordDefinition({
   ]
 });
 ```
+
 This error will be thrown:
 ```
  [CrosswordDefinition] Clue '4d' ('History') with number '4' at (1, 2) has a label which is inconsistent with another clue '1a' (1) with number'Hello'. If two clues starts in the same cell, the 'number' option must be the same. In this case, 1
