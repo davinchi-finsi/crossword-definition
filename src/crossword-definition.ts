@@ -136,7 +136,7 @@ export class CrosswordDefinition implements CrosswordDefinitionOptions{
      * Matrix with all the cells
      */
     matrix?:CrosswordCell[][];
-    constructor(crosswordDefinition:CrosswordDefinition){
+    constructor(crosswordDefinition:CrosswordDefinitionOptions){
 
         //  Set up some data we'll store in the class.
         this.width = crosswordDefinition.width;
@@ -154,24 +154,25 @@ export class CrosswordDefinition implements CrosswordDefinitionOptions{
         for(let definitionIndex = 0; definitionIndex < clueDefinitions.length; definitionIndex++) {
 
             //  Grab the clue and build a flag letting us know if we're across or down.
-            let clueDefinition = clueDefinitions[definitionIndex];
-            let across = definitionIndex < crosswordDefinition.acrossClues.length;
-
+            let clueDefinition = clueDefinitions[definitionIndex],
+                across = definitionIndex < crosswordDefinition.acrossClues.length,
             //  Create a model for the clue.
-            let clueModel = new CrosswordClueDefinition({
-                number: clueDefinition.number,
-                answer: clueDefinition.answer,
-                x: clueDefinition.x - 1,    //  Definitions are 1 based, models are more useful 0 based.
-                y: clueDefinition.y - 1,
-                across: across,
-                clue: clueDefinition.clue,
-                hints:clueDefinition.hints
-            });
+                clueModel = new CrosswordClueDefinition({
+                    number: clueDefinition.number,
+                    answer: clueDefinition.answer,
+                    x: clueDefinition.x - 1,    //  Definitions are 1 based, models are more useful 0 based.
+                    y: clueDefinition.y - 1,
+                    across: across,
+                    clue: clueDefinition.clue,
+                    hints:clueDefinition.hints
+                }),
+                x = clueModel.x,
+                y = clueModel.y;
             this[across ? 'acrossClues' : 'downClues'].push(clueModel);
 
             //  The clue position must be in the bounds.
             if(clueModel.x < 0 || clueModel.x >= this.width || clueModel.y < 0 || clueModel.y >= this.height) {
-                throw new Error(`[CrosswordDefinition] Clue ${clueModel.code} doesn't start in the bounds.`);
+                throw new Error(`[CrosswordDefinition] Clue '${clueModel.answer}' at (${clueModel.x + 1}, ${clueModel.y + 1}) doesn't start in the bounds.`);
             }
 
            /* //  Copy over the clue definition length into the model,
@@ -184,34 +185,30 @@ export class CrosswordDefinition implements CrosswordDefinitionOptions{
             //  Make sure the clue is not too long.
             if(across) {
                 if((clueModel.x + clueModel.answer.length) > this.width) {
-                    throw new Error(`[CrosswordDefinition] Clue at (${clueModel.x+1},${clueModel.y+1}) '${clueModel.answer}' exceeds horizontal bounds, width of ${this.width}.`);
+                    throw new Error(`[CrosswordDefinition] Clue '${clueModel.code}' '${clueModel.answer}' at (${clueModel.x + 1}, ${clueModel.y + 1}) exceeds horizontal bounds, the clue needs a with of ${clueModel.answer.length+clueModel.x} but the board has a width of ${this.width}.`);
                 }
             } else {
                 if((clueModel.y + clueModel.answer.length) > this.height) {
-                    throw new Error(`[CrosswordDefinition] Clue at (${clueModel.x+1},${clueModel.y+1}) '${clueModel.answer}' exceeds vertical bounds, height of ${this.height}.`);
+                    throw new Error(`[CrosswordDefinition] Clue '${clueModel.code}' '${clueModel.answer}' at (${clueModel.x + 1}, ${clueModel.y + 1}) exceeds vertical bounds, the clue needs a height of ${clueModel.answer.length+clueModel.y} but the board has a height of ${this.height}.`);
                 }
             }
-            let x = clueModel.x;
-            let y = clueModel.y;
+            //for each letter
             for(let letter = 0; letter < clueModel.answer.length; letter++) {
                 let cell = this.matrix[y][x];
-                cell.light = true;
-                cell[across ? 'acrossClue' : 'downClue'] = clueModel;
-                cell[across ? 'acrossClueLetterIndex' : 'downClueLetterIndex'] = letter;
-                clueModel.cells.push(cell);
-                //letter starts with 0, hints positions starts from 1,
-                if(clueModel.hints.length > 0 && (clueModel.hints.indexOf(letter+1) != -1)){
-                    cell.hint = true;
-                }
-                //  If the clue has an answer we set it in the cell...
-                if(clueModel.answer) {
-
-                    //  ...but only if it is not different to an existing answer.
-                    if(cell.answer !== undefined && cell.answer !== " "  && cell.answer.toLowerCase() !== clueModel.answer[letter].toLowerCase()) {
+                //if the cell already has an answer, perform checks
+                if(cell.answer) {
+                    //check if the clue is overlapping another across clue
+                    if(clueModel.across && cell.acrossClue){
+                        throw new Error(`[CrosswordDefinition] Across clue '${clueModel.code}' '${clueModel.answer}' at (${x + 1}, ${y + 1}) is overlapping the existing clue '${cell.acrossClue.code}' '${cell.acrossClue.answer}' at (${cell.acrossClue.x + 1}, ${cell.acrossClue.y + 1})`);
+                    //check if the clue is overlapping another down clue
+                    }else if(!clueModel.across && cell.downClue){
+                        throw new Error(`[CrosswordDefinition] Down clue '${clueModel.code}' '${clueModel.answer}' at (${x + 1}, ${y + 1}) is overlapping the existing clue '${cell.downClue.code}' '${cell.downClue.answer}' at (${cell.downClue.x + 1}, ${cell.downClue.y + 1})`);
+                    //check if both clues are coherent
+                    }else if(cell.answer.toLowerCase() !== clueModel.answer[letter].toLowerCase()) {
                         let cellWord:any = cell.acrossClue.answer.split(""),
                             cellWordLetterIndex = cell.acrossClueLetterIndex,
-                            clueWord:any = cell.downClue.answer.split(""),
-                            clueWordLetterIndex = cell.downClueLetterIndex;
+                            clueWord:any = clueModel.answer.split(""),
+                            clueWordLetterIndex = letter;
                         cellWord.splice(cellWordLetterIndex,0,"[");
                         cellWord.splice(cellWordLetterIndex+2,0,"]");
                         cellWord = cellWord.join("");
@@ -220,17 +217,23 @@ export class CrosswordDefinition implements CrosswordDefinitionOptions{
                         clueWord = clueWord.join("");
                         throw new Error(`[CrosswordDefinition] Clue '${clueModel.code}' answer at (${x + 1}, ${y + 1}) is not coherent with previous clue '${cell.acrossClue.code}' at (${cell.acrossClue.x+1}, ${cell.acrossClue.y+1}) answer. ${cellWord} doesn't match with ${clueWord}`);
                     }
-                    cell.answer = clueModel.answer[letter];
                 }
-
                 if(letter === 0) {
                     if(cell.clueLabel && cell.clueLabel !== clueModel.number) {
                         const prevClue = cell.acrossClue || cell.downClue;
-                        throw new Error(`[CrosswordDefinition] Clue '${clueModel.code}' ('${clueModel.answer}') with number '${clueModel.number}' at (${x + 1}, ${y + 1}) has a label which is inconsistent with another clue '${cell.acrossClue.code}' (${prevClue.number}) with number'${prevClue.answer}'. If two clues starts in the same cell, the 'number' option must be the same. In this case, ${prevClue.number}`);
+                        throw new Error(`[CrosswordDefinition] Clue '${clueModel.code}' ('${clueModel.answer}') at (${x + 1}, ${y + 1}) has a label which is inconsistent with another clue '${cell.acrossClue.code}' (${prevClue.number}) with number'${prevClue.answer}'. If two clues starts in the same cell, the 'number' option must be the same. In this case, ${prevClue.number}`);
                     }
                     cell.clueLabel = clueModel.number;
                 }
-
+                cell.answer = clueModel.answer[letter];
+                cell.light = true;
+                cell[across ? 'acrossClue' : 'downClue'] = clueModel;
+                cell[across ? 'acrossClueLetterIndex' : 'downClueLetterIndex'] = letter;
+                clueModel.cells.push(cell);
+                //letter starts with 0, hints positions starts from 1,
+                if(clueModel.hints.length > 0 && (clueModel.hints.indexOf(letter+1) != -1)){
+                    cell.hint = true;
+                }
                 if(across) {
                     x++;
                 } else {
