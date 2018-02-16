@@ -51,7 +51,7 @@ export default [
         output: {
             file: `esm2015/${fileName}.js`,
             name:packageName,
-            format: 'umd'
+            format: 'es'
         },
         plugins: [
             typescript({
@@ -69,7 +69,7 @@ export default [
         output: {
             file: `esm2015/${fileName}.min.js`,
             name:packageName,
-            format: 'umd'
+            format: 'es'
         },
         plugins: [
             typescript({
